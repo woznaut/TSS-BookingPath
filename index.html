@@ -188,7 +188,7 @@
     grid-template-columns:repeat(2,1fr);
     gap:18px;
   }
-  @media (max-width:760px){ .pairs{ grid-template-columns:1fr; } }
+  @media (max-width:760px){ .pairs, .ai-grid{ grid-template-columns:1fr; } }
   .pair{
     background:var(--paper-raised);
     border:1px solid var(--line);
@@ -211,6 +211,67 @@
   .tag.fix{ color:var(--sage); }
   .pair p{ margin:0; font-size:14.5px; line-height:1.55; color:var(--ink); }
   .pair .row.fix{ background:var(--sage-soft); }
+
+  /* ---------- AI discussion points ---------- */
+  .caveat{
+    font-size:13px;
+    line-height:1.6;
+    color:var(--ink-muted);
+    background:var(--gold-soft);
+    border-left:3px solid var(--gold);
+    padding:11px 16px;
+    border-radius:0 8px 8px 0;
+    margin:2px 0 24px;
+    max-width:70ch;
+  }
+  .ai-grid{
+    display:grid;
+    grid-template-columns:repeat(2,1fr);
+    gap:18px;
+  }
+  .ai-card{
+    background:var(--paper-raised);
+    border:1px solid var(--line);
+    border-radius:10px;
+    box-shadow:var(--shadow);
+    padding:20px 22px;
+    display:flex;
+    flex-direction:column;
+    gap:8px;
+  }
+  .ai-card-head{
+    display:flex;
+    align-items:center;
+    gap:10px;
+    margin-bottom:2px;
+  }
+  .ai-index{
+    font-family:"IBM Plex Mono", monospace;
+    font-size:12px;
+    font-weight:600;
+    color:var(--gold);
+  }
+  .tag-chip{
+    font-family:"IBM Plex Mono", monospace;
+    font-size:10px;
+    letter-spacing:0.05em;
+    text-transform:uppercase;
+    color:var(--ink-muted);
+    background:var(--paper);
+    border:1px solid var(--line);
+    padding:3px 9px;
+    border-radius:999px;
+  }
+  .ai-card h3{
+    font-size:17px;
+    font-weight:600;
+  }
+  .ai-card p{
+    margin:0;
+    font-size:14.5px;
+    line-height:1.55;
+    color:var(--ink);
+  }
 
   /* ---------- Reference table ---------- */
   .table-frame{
@@ -490,6 +551,56 @@
       <div class="pair">
         <div class="row friction"><span class="tag friction">Friction</span><p>Holds are checked as a separate, easy-to-skip errand days before booking opens, rather than being caught at the moment they'd actually stop something.</p></div>
         <div class="row fix"><span class="tag fix">Fix</span><p>Show any active hold directly on the appointment-time card and at the top of the booking screen, with a one-click link to resolve it.</p></div>
+      </div>
+
+    </div>
+  </section>
+
+  <!-- ================= AI DISCUSSION POINTS ================= -->
+  <section aria-labelledby="ai-h">
+    <div class="section-head">
+      <h2 id="ai-h">Where AI could help, out of view</h2>
+      <p>Not a chatbot bolted onto the booking screen — prediction, matching, and routing sitting quietly behind steps already on the map above.</p>
+    </div>
+
+    <p class="caveat">Discussion points, not vetted recommendations. Each would need real scoping against data availability, model accuracy, and FERPA / student-privacy constraints before it's a project.</p>
+
+    <div class="ai-grid">
+
+      <div class="ai-card">
+        <div class="ai-card-head"><span class="ai-index">01</span><span class="tag-chip">Book → Blocked → TEA</span></div>
+        <h3>TEA request triage</h3>
+        <p>A blocked booking currently means a human reviews the exception from scratch. A model could pre-clear the unambiguous cases — a known transfer-credit equivalency, a prerequisite completed but not yet posted — against the student's record, and escalate only what's genuinely ambiguous.</p>
+      </div>
+
+      <div class="ai-card">
+        <div class="ai-card-head"><span class="ai-index">02</span><span class="tag-chip">Book → Waitlisted</span></div>
+        <h3>Waitlist position → probability</h3>
+        <p>A position number ("you're #14") doesn't tell a student what to do next. A model trained on historical drop rates by course, week, and day could turn that into a likelihood of clearing — same spot in the UI, a more useful number.</p>
+      </div>
+
+      <div class="ai-card">
+        <div class="ai-card-head"><span class="ai-index">03</span><span class="tag-chip">Prepare</span></div>
+        <h3>Hold routing</h3>
+        <p>Holds have known types — financial, advising, immunization, judicial — but "resolve your hold" currently points to one generic office. A classifier could route each hold to the office or form that actually clears it, or resolve the mechanical ones automatically.</p>
+      </div>
+
+      <div class="ai-card">
+        <div class="ai-card-head"><span class="ai-index">04</span><span class="tag-chip">Plan (optional)</span></div>
+        <h3>Schedule generation, not just search</h3>
+        <p>The Planner already takes natural-language search, but building a conflict-free schedule is still manual. A constraint solver given the student's remaining degree requirements and current unit cap could hand back 2–3 ranked, non-conflicting schedules instead.</p>
+      </div>
+
+      <div class="ai-card">
+        <div class="ai-card-head"><span class="ai-index">05</span><span class="tag-chip">Booking Passes · institutional</span></div>
+        <h3>Demand forecasting</h3>
+        <p>Not student-facing at all: a model watching waitlist fill velocity in real time could flag that a section will need to be added before the waitlist even opens, giving departments a heads-up instead of students absorbing the shortage.</p>
+      </div>
+
+      <div class="ai-card">
+        <div class="ai-card-head"><span class="ai-index">06</span><span class="tag-chip">Booking Passes · institutional</span></div>
+        <h3>Abuse &amp; integrity monitoring</h3>
+        <p>First Pass and appointment times exist to keep booking fair. Anomaly detection during peak windows — bot-driven refreshes, seat-squatting, multi-account patterns — protects that fairness without ever surfacing to a normal student.</p>
       </div>
 
     </div>
